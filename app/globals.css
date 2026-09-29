@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #F8F4EC;
+  --color-dark: #141414;
+  --color-dark-card: #171717;
+  --color-mustard: #EDB13E;
+  --color-mustard-hover: #DFA32E;
+  --color-g-blue: #4C80F0;
+  --color-g-red: #D9503F;
+  --color-g-green: #4FA35A;
+  --color-g-yellow: #F9AB00;
+  --color-lavender: #EFF2FB;
+  --color-editor-gutter: #66625B;
+  --color-editor-ink: #F7F3EA;
+  --font-display: "Google Sans", Inter, -apple-system, sans-serif;
+  --font-ui: Inter, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  --cream: #F8F4EC;
+  --dark: #141414;
+  --mustard: #EDB13E;
+}
+
+body {
+  background-color: #F8F4EC;
+  color: #141414;
+  font-family: var(--font-ui), Inter, sans-serif;
+  background-image: radial-gradient(#141414 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+}
+
+/* Neo-Brutalist Border and Shadow System */
+.brutal-border {
+  border: 2px solid #141414;
+}
+
+.brutal-border-3 {
+  border: 3px solid #141414;
+}
+
+.brutal-shadow-sm {
+  box-shadow: 2px 2px 0 #141414;
+}
+
+.brutal-shadow {
+  box-shadow: 4px 4px 0 #141414;
+}
+
+.brutal-shadow-md {
+  box-shadow: 3px 3px 0 #141414;
+}
+
+.brutal-shadow-lg {
+  box-shadow: 6px 6px 0 #141414;
+}
+
+.brutal-shadow-xl {
+  box-shadow: 8px 8px 0 #141414;
+}
+
+.btn-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #141414;
+}
+
+/* Code Syntax & Annotation Helpers */
+.syn-keyword {
+  color: #FF7B72;
+  font-weight: 600;
+}
+
+.syn-func {
+  color: #79C0FF;
+}
+
+.syn-param {
+  color: #FFA657;
+}
+
+.syn-comment {
+  color: #8B949E;
+  font-style: italic;
+}
+
+.syn-string {
+  color: #A5D6FF;
+}
+
+.syn-op {
+  color: #FF7B72;
+}
+
+.syn-error {
+  background-color: rgba(217, 80, 63, 0.25);
+  border-bottom: 2px wavy #D9503F;
+}
+
+.syn-warn {
+  background-color: rgba(237, 177, 62, 0.25);
+  border-bottom: 2px dashed #EDB13E;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F4EC;
+  border-left: 2px solid #141414;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EDB13E;
+  border: 2px solid #141414;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #DFA32E;
+}

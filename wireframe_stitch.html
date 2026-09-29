@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Code Roaster (Desi Edition) - DevFest Nashik 2026</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700;800;900&amp;family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F8F4EC',
+            dark: '#141414',
+            darkCard: '#171717',
+            mustard: '#EDB13E',
+            mustardHover: '#DFA32E',
+            gBlue: '#4C80F0',
+            gRed: '#D9503F',
+            gGreen: '#4FA35A',
+            gYellow: '#F9AB00',
+            editorGutter: '#66625B',
+            editorText: '#F7F3EA',
+            infoBg: '#EFF2FB'
+          },
+          fontFamily: {
+            sans: ['"Google Sans"', 'Inter', 'sans-serif'],
+            ui: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'brutal-sm': '2px 2px 0 #141414',
+            'brutal': '4px 4px 0 #141414',
+            'brutal-lg': '6px 6px 0 #141414',
+            'brutal-xl': '8px 8px 0 #141414'
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F8F4EC;
+      color: #141414;
+      font-family: 'Inter', sans-serif;
+      background-image: radial-gradient(#141414 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+    .brutal-border {
+      border: 2px solid #141414;
+    }
+    .brutal-border-3 {
+      border: 3px solid #141414;
+    }
+    .brutal-shadow {
+      box-shadow: 4px 4px 0 #141414;
+    }
+    .brutal-shadow-sm {
+      box-shadow: 2px 2px 0 #141414;
+    }
+    .brutal-shadow-md {
+      box-shadow: 3px 3px 0 #141414;
+    }
+    .brutal-shadow-lg {
+      box-shadow: 6px 6px 0 #141414;
+    }
+    .btn-press:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #141414;
+    }
+    /* Syntax colors */
+    .syn-keyword { color: #FF7B72; font-weight: 600; }
+    .syn-func { color: #79C0FF; }
+    .syn-param { color: #FFA657; }
+    .syn-comment { color: #8B949E; font-style: italic; }
+    .syn-string { color: #A5D6FF; }
+    .syn-op { color: #FF7B72; }
+    .syn-error { background-color: rgba(217, 80, 63, 0.25); border-bottom: 2px wavy #D9503F; }
+    .syn-warn { background-color: rgba(237, 177, 62, 0.25); border-bottom: 2px dashed #EDB13E; }
+  </style>
+</head>
+<body class="min-h-screen text-dark antialiased flex flex-col justify-between selection:bg-mustard selection:text-dark">
+<!-- Header Section (Floating Pill Navbar) -->
+<header class="w-full px-6 pt-6">
+<div class="max-w-[1140px] mx-auto bg-white brutal-border brutal-shadow rounded-full px-6 py-3 flex items-center justify-between transition-all">
+<!-- Left: GDG Nashik Logo -->
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center">
+<svg class="w-9 h-7" fill="none" viewbox="0 0 48 36" xmlns="http://www.w3.org/2000/svg">
+<!-- Google Colored Brackets with bold neo-brutalist border -->
+<!-- Left angle bracket < in Red & Yellow -->
+<path d="M16 6L4 18L16 30" stroke="#141414" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5"></path>
+<path d="M16 6L4 18" stroke="#EA4335" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M4 18L16 30" stroke="#FBBC05" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Slash / in Google Blue -->
+<path d="M28 5L20 31" stroke="#141414" stroke-linecap="round" stroke-width="4.5"></path>
+<path d="M28 5L20 31" stroke="#4285F4" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Right angle bracket > in Green & Blue -->
+<path d="M32 6L44 18L32 30" stroke="#141414" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5"></path>
+<path d="M32 6L44 18" stroke="#34A853" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M44 18L32 30" stroke="#4285F4" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<div class="flex flex-col leading-none">
+<span class="font-sans font-black text-[11px] tracking-tight uppercase text-dark">Google Developer Groups</span>
+<span class="font-sans font-extrabold text-[15px] tracking-wide text-[#4285F4] flex items-center gap-1.5">
+      Nashik
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#34A853]"></span>
+</span>
+</div>
+</div>
+<!-- Center: Display Title with Flame Emoji -->
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-orange-100 border border-dark text-sm animate-pulse">🔥</span>
+<h1 class="font-sans font-extrabold text-base md:text-lg tracking-tight text-dark flex items-center gap-1.5">
+<span>CODE ROASTER</span>
+<span class="bg-dark text-mustard px-2 py-0.5 rounded-full font-mono text-[10px] font-bold tracking-widest">v2.6</span>
+</h1>
+</div>
+<!-- Right: DevFest Nashik 2026 Badge -->
+<div class="flex items-center gap-2">
+<a class="inline-flex items-center bg-[#FBBC05] brutal-border brutal-shadow-sm px-3 py-1 rounded-full font-mono font-bold text-xs tracking-tight text-dark gap-2 hover:bg-[#EDB13E] transition-all cursor-pointer select-none group" href="#">
+<svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewbox="0 0 16 16">
+<circle cx="8" cy="8" fill="#141414" r="7" stroke="#141414" stroke-width="1"></circle>
+<circle class="animate-ping" cx="8" cy="8" fill="#FBBC05" r="3.5"></circle>
+<circle cx="8" cy="8" fill="#FBBC05" r="2.5"></circle>
+</svg>
+<span class="tracking-tight font-extrabold font-sans text-dark">&lt; DevFest '26 /&gt;</span>
+<span class="bg-dark text-[#FBBC05] text-[10px] font-mono font-black px-1.5 py-0.5 rounded tracking-wider uppercase group-hover:scale-105 transition-transform">NASHIK</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Hero & Subheader -->
+<main class="w-full max-w-[1240px] mx-auto px-6 py-8 flex-grow">
+<!-- Hero Eyebrow & Headline -->
+<div class="text-center max-w-3xl mx-auto mb-8">
+<div class="inline-flex items-center gap-2 bg-mustard brutal-border brutal-shadow-sm px-4 py-1 rounded-full font-mono text-xs font-bold tracking-widest text-dark uppercase mb-3">
+<span class="text-dark">🌶️</span>
+<span>CODE BOL RAHA HAI · मला वाचवा!</span>
+</div>
+<h2 class="font-sans font-black text-4xl md:text-5xl text-dark tracking-tight leading-tight mb-3">
+        Code Roaster <span class="text-2xl md:text-3xl font-mono font-bold text-dark/70">(देशी Edition)</span>
+</h2>
+<p class="font-ui text-base md:text-lg text-dark/80 font-medium max-w-2xl mx-auto leading-relaxed">
+        Paste your code. Pick your roast level. Get humbled. Get the fix. <br class="hidden sm:inline"/>
+<span class="font-semibold text-dark">Desi debugging with zero filter</span>, powered by Gemini 2.5 Flash.
+      </p>
+</div>
+<!-- Main Split-Pane Tool Card Container -->
+<div class="bg-white brutal-border brutal-shadow-lg rounded-[24px] overflow-hidden flex flex-col transition-all">
+<!-- Top Control Bar -->
+<div class="bg-[#FAF8F5] border-b-2 border-dark px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+<!-- Left: Roast Level & Persona Controls -->
+<div class="flex flex-wrap items-center gap-4">
+<!-- Segmented Roast Level -->
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-xs font-bold uppercase text-dark/70 mr-1 tracking-wider">Tikhat Level:</span>
+<div class="bg-cream brutal-border rounded-full p-1 flex items-center gap-1">
+<button class="px-3 py-1 rounded-full font-mono text-xs font-semibold text-dark hover:bg-black/5 transition-all">
+                Halka 🍋
+              </button>
+<button class="px-3.5 py-1 rounded-full font-mono text-xs font-bold text-dark bg-mustard brutal-border brutal-shadow-sm">
+                Tikha 🔥
+              </button>
+<button class="px-3 py-1 rounded-full font-mono text-xs font-semibold text-dark hover:bg-black/5 transition-all">
+                Zanzanit 💀
+              </button>
+</div>
+</div>
+<!-- Persona Selector Dropdown -->
+<div class="relative">
+<div class="bg-white brutal-border brutal-shadow-sm rounded-full px-4 py-1.5 flex items-center gap-2 cursor-pointer hover:bg-cream transition-colors">
+<span class="text-xs font-mono text-gray-500 font-semibold">PERSONA:</span>
+<span class="text-xs font-sans font-bold text-dark">Hostel Bhau</span>
+<span class="text-xs text-dark font-black">▼</span>
+</div>
+</div>
+<!-- Language Selector -->
+<div class="relative">
+<div class="bg-white brutal-border brutal-shadow-sm rounded-full px-3.5 py-1.5 flex items-center gap-2 cursor-pointer hover:bg-cream transition-colors">
+<span class="w-2 h-2 rounded-full bg-gGreen"></span>
+<span class="text-xs font-mono font-bold text-dark">Python (Auto-detect)</span>
+<span class="text-xs text-dark font-black">▼</span>
+</div>
+</div>
+</div>
+<!-- Right: Actions & Roast CTA -->
+<div class="flex items-center gap-3">
+<button class="border-2 border-dashed border-dark/60 hover:border-dark bg-white hover:bg-cream/60 px-3.5 py-1.5 rounded-full font-mono text-xs font-bold text-dark flex items-center gap-1.5 transition-all">
+<span>+ ERROR MESSAGE</span>
+</button>
+<button class="bg-mustard hover:bg-mustardHover btn-press brutal-border brutal-shadow px-6 py-2 rounded-full font-sans font-black text-sm tracking-tight text-dark flex items-center gap-2 transition-all">
+<span>Roast Me / भाजून काढ</span>
+<span class="text-base">🔥 →</span>
+</button>
+</div>
+</div>
+<!-- Split-Pane Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 min-h-[580px]">
+<!-- Left Column: Code Editor (5 Cols on large) -->
+<div class="lg:col-span-5 p-6 border-b-2 lg:border-b-0 lg:border-r-2 border-dark flex flex-col bg-white">
+<!-- Editor Title Row -->
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-dark/15">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-bold bg-dark text-white px-2 py-0.5 rounded">INPUT // SRC</span>
+<h3 class="font-sans font-bold text-sm tracking-tight text-dark">YOUR CODE</h3>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-[11px] font-mono font-bold bg-[#FAF8F5] hover:bg-cream brutal-border brutal-shadow-sm px-2.5 py-0.5 rounded-md text-dark transition-all">
+                SAMPLE BUG
+              </button>
+<button class="text-[11px] font-mono font-semibold text-gray-500 hover:text-dark px-1.5 py-0.5">
+                CLEAR
+              </button>
+</div>
+</div>
+<!-- Code Window Dark Frame -->
+<div class="bg-darkCard brutal-border rounded-[14px] p-4 flex-grow flex flex-col font-mono text-xs leading-relaxed text-editorText shadow-inner relative overflow-hidden">
+<!-- Window header dots -->
+<div class="flex items-center justify-between pb-3 mb-2 border-b border-gray-800">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-[#EA4335] inline-block border border-black/40"></span>
+<span class="w-3 h-3 rounded-full bg-[#FBBC05] inline-block border border-black/40"></span>
+<span class="w-3 h-3 rounded-full bg-[#34A853] inline-block border border-black/40"></span>
+<span class="ml-2 text-[11px] text-gray-400 font-mono">attendance_system.py</span>
+</div>
+<span class="text-[10px] uppercase font-bold text-mustard bg-dark px-1.5 py-0.5 rounded border border-gray-700">Editable</span>
+</div>
+<!-- Code Gutter and Lines -->
+<div class="flex gap-3 overflow-x-auto flex-grow pt-1">
+<!-- Gutter Line Numbers -->
+<div class="text-editorGutter select-none text-right font-mono flex flex-col gap-1 pr-2 border-r border-gray-800 text-[12px]">
+<span>01</span>
+<span>02</span>
+<span>03</span>
+<span>04</span>
+<span>05</span>
+<span>06</span>
+<span>07</span>
+<span>08</span>
+<span>09</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+</div>
+<!-- Python Code Content -->
+<div class="flex flex-col gap-1 font-mono text-[12.5px] leading-snug whitespace-pre overflow-x-auto flex-grow">
+<div><span class="syn-keyword">def</span> <span class="syn-func">calculate_attendance</span>(attended, total):</div>
+<div> <span class="syn-comment"># Bhau logic - proxy lagai kya?</span></div>
+<div>    ratio = attended / total</div>
+<div class="syn-error rounded px-1 -mx-1"><span class="syn-keyword">if</span> ratio = <span class="text-[#79C0FF]">0.75</span>:  <span class="text-gRed font-bold text-[10px]"># 🚨 Assignment in if-condition!</span></div>
+<div>        status = <span class="syn-string">"Allowed for Exam"</span></div>
+<div> <span class="syn-keyword">else</span>:</div>
+<div class="syn-warn rounded px-1 -mx-1">        status = <span class="syn-string">"Detained"</span> <span class="text-mustard font-bold text-[10px]"># ⚠️ Detained bhau!</span></div>
+<div class="syn-error rounded px-1 -mx-1"> <span class="syn-keyword">print</span>(<span class="syn-string">"Attendance: "</span> + ratio)  <span class="text-gRed font-bold text-[10px]"># 🚨 TypeError str + float</span></div>
+<div> <span class="syn-keyword">return</span> status</div>
+<div></div>
+<div><span class="syn-comment"># Test run</span></div>
+<div>print(calculate_attendance(<span class="text-[#79C0FF]">54</span>, <span class="text-[#79C0FF]">75</span>))</div>
+</div>
+</div>
+<!-- Code Window Footer Stats -->
+<div class="mt-4 pt-2.5 border-t border-gray-800 flex items-center justify-between text-[11px] text-gray-400 font-mono">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-gGreen"></span>
+<span>Python 3.12 · Auto-detected</span>
+</div>
+<span class="text-gray-500 font-medium">1,204 / 12,000 chars</span>
+</div>
+</div>
+<!-- Quick Tip Note -->
+<div class="mt-3 bg-cream brutal-border rounded-xl p-2.5 flex items-center justify-between text-xs font-mono">
+<span class="text-dark/80">⚡ Tip: Paste traceback or logs with the error button above</span>
+<span class="font-bold text-dark underline cursor-pointer">Read Docs</span>
+</div>
+</div>
+<!-- Right Column: Roast Report (7 Cols on large) -->
+<div class="lg:col-span-7 p-6 bg-[#FCFBF8] flex flex-col justify-between">
+<div class="space-y-5">
+<!-- Report Header & Savage Quote -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-bold bg-mustard text-dark px-2 py-0.5 rounded brutal-border brutal-shadow-sm">AUDIT // REPORT</span>
+<span class="text-xs font-mono uppercase font-bold text-dark/70 tracking-wider">ROAST REPORT · TIKHA LEVEL</span>
+</div>
+<span class="font-mono text-[11px] text-gray-500 font-semibold">Gemini 2.5 Audit · 0.42s</span>
+</div>
+<!-- Savage Headline -->
+<div class="bg-white brutal-border brutal-shadow p-4 rounded-[18px] relative overflow-hidden">
+<div class="absolute -right-3 -bottom-3 text-7xl select-none opacity-5 font-black font-sans">ROAST</div>
+<p class="font-sans font-black text-xl md:text-2xl text-dark leading-snug tracking-tight">
+                  “Yeh code nahi, Panchavati Express ki general boghi hai — bheed bohot hai aur track ka koi bharosa nahi!”
+                </p>
+<div class="mt-2 flex items-center gap-2 text-xs font-mono text-gray-600">
+<span class="font-bold text-dark">Roaster Persona:</span>
+<span class="bg-gray-100 px-2 py-0.5 rounded font-semibold text-dark">Hostel Bhau (Nashikkar Edition)</span>
+</div>
+</div>
+</div>
+<!-- Score Badge: Rubber Stamp Effect -->
+<div class="flex items-center gap-3">
+<div class="inline-block transform -rotate-2 bg-mustard brutal-border-3 brutal-shadow-md px-4 py-2 rounded-xl">
+<div class="font-mono text-[10px] font-black uppercase tracking-widest text-dark/80">OVERALL VERDICT</div>
+<div class="font-sans font-black text-base md:text-lg text-dark tracking-tight leading-none mt-0.5">
+                  72 / 100 — ATTENDANCE SHORT, CODE BHI SHORT
+                </div>
+</div>
+<div class="text-xs font-mono font-bold text-gRed bg-red-50 border border-gRed/40 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+<span>⚠️ 2 Critical Blunders Found</span>
+</div>
+</div>
+<!-- Issue Cards List -->
+<div class="space-y-3">
+<!-- Issue Card 1 -->
+<div class="bg-white brutal-border brutal-shadow-md rounded-[14px] p-4 relative transition-hover hover:-translate-y-0.5">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-black bg-dark text-white px-2 py-0.5 rounded">LINE 04</span>
+<span class="font-mono text-xs font-bold text-dark/70 tracking-wide uppercase">SYNTAX / LOGIC ERROR</span>
+</div>
+<span class="bg-[#FDE8E8] text-gRed border border-gRed/40 px-2.5 py-0.5 rounded-full font-mono text-[11px] font-black tracking-wider">
+                    CRITICAL
+                  </span>
+</div>
+<p class="font-ui text-sm text-dark font-medium mb-2.5">
+<span class="font-bold text-gRed">Roast:</span> “Bhau, single <code class="font-mono bg-cream px-1.5 py-0.5 rounded border border-dark/20 text-xs font-bold">=</code> assignment hota hai, comparison ke liye <code class="font-mono bg-cream px-1.5 py-0.5 rounded border border-dark/20 text-xs font-bold">==</code> lagate hai. Sharma ji ka beta nursery mein sikh gaya tha.”
+                </p>
+<div class="bg-[#F8F9FA] border border-dark/15 rounded-lg p-2.5 flex items-center justify-between text-xs font-mono">
+<div class="flex items-center gap-2">
+<span class="text-gGreen font-bold">Fix:</span>
+<span class="text-dark font-semibold">Use <code class="text-gGreen font-black">if ratio == 0.75:</code> (or better: <code class="text-gGreen font-black">&gt;= 0.75</code>) instead of assignment.</span>
+</div>
+<span class="text-[10px] text-gray-500 font-bold">Auto-fixable ✓</span>
+</div>
+</div>
+<!-- Issue Card 2 -->
+<div class="bg-white brutal-border brutal-shadow-md rounded-[14px] p-4 relative transition-hover hover:-translate-y-0.5">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-black bg-dark text-white px-2 py-0.5 rounded">LINE 07</span>
+<span class="font-mono text-xs font-bold text-dark/70 tracking-wide uppercase">TYPE ERROR (FATAL)</span>
+</div>
+<span class="bg-[#FEF3D6] text-[#B45309] border border-[#B45309]/40 px-2.5 py-0.5 rounded-full font-mono text-[11px] font-black tracking-wider">
+                    RUNTIME ERROR
+                  </span>
+</div>
+<p class="font-ui text-sm text-dark font-medium mb-2.5">
+<span class="font-bold text-[#B45309]">Roast:</span> “String aur float ko <code class="font-mono bg-cream px-1.5 py-0.5 rounded border border-dark/20 text-xs font-bold">+</code> se jod rahe ho? Nashik ki misal pav mein gulab jamun mat dalo yaar.”
+                </p>
+<div class="bg-[#F8F9FA] border border-dark/15 rounded-lg p-2.5 flex items-center justify-between text-xs font-mono">
+<div class="flex items-center gap-2">
+<span class="text-gGreen font-bold">Fix:</span>
+<span class="text-dark font-semibold">Convert to <code class="text-gGreen font-black">str(ratio)</code> or formatted f-string <code class="text-gGreen font-black">f"Attendance: {ratio:.2f}"</code></span>
+</div>
+<span class="text-[10px] text-gray-500 font-bold">Auto-fixable ✓</span>
+</div>
+</div>
+<!-- Error Explainer Card -->
+<div class="bg-infoBg brutal-border rounded-[14px] p-3.5 flex items-start gap-3">
+<div class="w-6 h-6 rounded-full bg-gBlue text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">i</div>
+<div class="text-xs font-mono leading-relaxed">
+<span class="font-black text-gBlue block text-[11px] uppercase tracking-wider mb-0.5">ERROR // WHAT ACTUALLY HAPPENED</span>
+<span class="text-dark/90 font-medium">
+<strong class="font-bold">TypeError:</strong> can only concatenate <code class="bg-white/80 px-1 py-0.5 rounded font-bold">str</code> (not <code class="bg-white/80 px-1 py-0.5 rounded font-bold">'float'</code>) to <code class="bg-white/80 px-1 py-0.5 rounded font-bold">str</code>. Python cannot implicitly cast floats in binary expressions.
+                  </span>
+</div>
+</div>
+<!-- Redemption Arc Section (The Clean Fix) -->
+<div class="bg-white brutal-border brutal-shadow-md rounded-[18px] p-4 border-l-8 border-l-gGreen">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="text-base">✨</span>
+<h4 class="font-sans font-bold text-sm text-dark tracking-tight">REDEMPTION ARC · Ab asli fix dekh, bhau</h4>
+</div>
+<button class="bg-cream hover:bg-mustard brutal-border brutal-shadow-sm px-2.5 py-1 rounded-md font-mono text-[11px] font-bold text-dark flex items-center gap-1 transition-all">
+<span>COPY CODE</span>
+<span>✓</span>
+</button>
+</div>
+<!-- Corrected Code Block -->
+<div class="bg-darkCard brutal-border rounded-[12px] p-3.5 font-mono text-[12px] text-editorText leading-snug overflow-x-auto">
+<div><span class="syn-keyword">def</span> <span class="syn-func">calculate_attendance</span>(attended: <span class="text-[#79C0FF]">int</span>, total: <span class="text-[#79C0FF]">int</span>) -&gt; <span class="text-[#79C0FF]">str</span>:</div>
+<div> <span class="syn-keyword">if</span> total &lt;= <span class="text-[#79C0FF]">0</span>:</div>
+<div> <span class="syn-keyword">return</span> <span class="syn-string">"Invalid Total"</span></div>
+<div>    ratio = attended / total</div>
+<div>    status = <span class="syn-string">"Allowed for Exam"</span> <span class="syn-keyword">if</span> ratio &gt;= <span class="text-[#79C0FF]">0.75</span> <span class="syn-keyword">else</span> <span class="syn-string">"Detained"</span></div>
+<div> <span class="syn-keyword">print</span>(<span class="syn-string">f"Attendance: {ratio * 100:.1f}%"</span>)</div>
+<div> <span class="syn-keyword">return</span> status</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Closing Action Bar & Encouragement -->
+<div class="mt-6 pt-4 border-t-2 border-dark/15">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+<div class="flex flex-wrap items-center gap-2">
+<button class="bg-white hover:bg-cream brutal-border brutal-shadow-sm px-3.5 py-1.5 rounded-full font-mono text-xs font-bold text-dark transition-all btn-press flex items-center gap-1.5">
+<span>SHARE ROAST</span>
+<span>↗</span>
+</button>
+<button class="bg-mustard hover:bg-mustardHover brutal-border brutal-shadow-sm px-4 py-1.5 rounded-full font-mono text-xs font-bold text-dark transition-all btn-press flex items-center gap-1.5">
+<span>ROAST AGAIN, SPICIER</span>
+<span>🔥</span>
+</button>
+<button class="bg-white hover:bg-cream brutal-border brutal-shadow-sm px-3.5 py-1.5 rounded-full font-mono text-xs font-bold text-dark transition-all btn-press">
+                  NEW CODE
+                </button>
+</div>
+<!-- Sincere Encouragement Quote -->
+<div class="font-ui text-xs font-semibold text-dark/75 italic">
+                “Chinta mat kar. Code bhi gym jaisa hai — repeat karoge toh better hoga.”
+              </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Community Stats & Highlights Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8 max-w-[1200px] mx-auto">
+<div class="bg-white brutal-border brutal-shadow p-4 rounded-[18px] flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-red-100 brutal-border flex items-center justify-center font-bold text-lg">
+          🌶️
+        </div>
+<div>
+<div class="font-sans font-black text-xl text-dark">4,820+ Bugs</div>
+<div class="font-mono text-xs text-dark/70 font-semibold">Roasted live at DevFest Nashik</div>
+</div>
+</div>
+<div class="bg-white brutal-border brutal-shadow p-4 rounded-[18px] flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-yellow-100 brutal-border flex items-center justify-center font-bold text-lg">
+          🏆
+        </div>
+<div>
+<div class="font-sans font-black text-xl text-dark">Hostel Bhau</div>
+<div class="font-mono text-xs text-dark/70 font-semibold">Most picked savage roaster persona</div>
+</div>
+</div>
+<div class="bg-white brutal-border brutal-shadow p-4 rounded-[18px] flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-blue-100 brutal-border flex items-center justify-center font-bold text-lg">
+          ⚡
+        </div>
+<div>
+<div class="font-sans font-black text-xl text-dark">Gemini 2.5 Flash</div>
+<div class="font-mono text-xs text-dark/70 font-semibold">Instant parsing &amp; redemption fixes</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer & Nashik Warli Pattern Strip -->
+<footer class="w-full mt-12 bg-white border-t-2 border-dark pt-4 pb-8">
+<!-- Warli / Rangoli Geometric Strip Divider -->
+<div class="max-w-[1200px] mx-auto px-6 mb-4">
+<div class="bg-[#FCFBF8] brutal-border brutal-shadow-sm rounded-[18px] p-3 md:p-4 flex flex-col md:flex-row items-center justify-between gap-4 overflow-hidden relative">
+<!-- Warli Art Tag / Label -->
+<div class="flex items-center gap-2 flex-shrink-0">
+<span class="bg-mustard brutal-border px-2 py-0.5 rounded font-mono text-[10px] font-black uppercase text-dark tracking-wider">नाशिक वारली कला × CODE</span>
+<span class="font-mono text-xs text-dark/70 hidden lg:inline">Nashik Folk Art &amp; Code Roast</span>
+</div>
+<!-- Authentic Warli Folk Stick Figures Vector SVG Strip -->
+<div class="flex-grow flex items-center justify-center overflow-x-auto w-full md:w-auto py-1">
+<svg class="h-12 w-[620px] max-w-full text-dark" fill="none" viewbox="0 0 620 48" xmlns="http://www.w3.org/2000/svg">
+<!-- Traditional Warli Sun Motif on Left -->
+<g transform="translate(15, 24)">
+<circle cx="0" cy="0" fill="#141414" r="6"></circle>
+<line stroke="#141414" stroke-dasharray="2 2" stroke-width="1.5" x1="-10" x2="10" y1="0" y2="0"></line>
+<line stroke="#141414" stroke-dasharray="2 2" stroke-width="1.5" x1="0" x2="0" y1="-10" y2="10"></line>
+<line stroke="#141414" stroke-dasharray="2 2" stroke-width="1.5" x1="-7" x2="7" y1="-7" y2="7"></line>
+<line stroke="#141414" stroke-dasharray="2 2" stroke-width="1.5" x1="7" x2="-7" y1="-7" y2="7"></line>
+</g>
+<!-- Warli Figure 1: Sitting cross-legged debugging on laptop with smoke/fire -->
+<g transform="translate(80, 10)">
+<!-- Head -->
+<circle cx="14" cy="6" fill="#141414" r="4.5"></circle>
+<!-- Inverted double triangle torso (Classic Warli body) -->
+<polygon fill="#141414" points="14,11 6,19 22,19"></polygon>
+<polygon fill="#141414" points="14,27 6,19 22,19"></polygon>
+<!-- Cross-legged sitting limbs -->
+<path d="M8 26L3 32L12 32M20 26L25 32L16 32" stroke="#141414" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<!-- Arms typing on laptop -->
+<path d="M10 16L18 20M18 16L24 21" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+<!-- Laptop base & screen -->
+<path d="M24 23L33 23M26 23L31 16" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+<!-- Fire / Bug fumes from roasted code -->
+<path d="M31 13Q34 10 32 7Q35 4 33 2" fill="none" stroke="#EA4335" stroke-linecap="round" stroke-width="1.5"></path>
+</g>
+<!-- Connecting Warli motif: tribal tree / code branch -->
+<g transform="translate(155, 10)">
+<line stroke="#141414" stroke-linecap="round" stroke-width="2" x1="15" x2="15" y1="5" y2="32"></line>
+<line stroke="#141414" stroke-linecap="round" stroke-width="1.5" x1="15" x2="8" y1="10" y2="16"></line>
+<line stroke="#141414" stroke-linecap="round" stroke-width="1.5" x1="15" x2="22" y1="10" y2="16"></line>
+<line stroke="#141414" stroke-linecap="round" stroke-width="1.5" x1="15" x2="7" y1="18" y2="24"></line>
+<line stroke="#141414" stroke-linecap="round" stroke-width="1.5" x1="15" x2="23" y1="18" y2="24"></line>
+</g>
+<!-- Warli Figure 2: Inspecting floating code bug with magnifying glass -->
+<g transform="translate(210, 10)">
+<!-- Head -->
+<circle cx="14" cy="6" fill="#141414" r="4.5"></circle>
+<!-- Warli double triangle torso -->
+<polygon fill="#141414" points="14,11 6,19 22,19"></polygon>
+<polygon fill="#141414" points="14,27 6,19 22,19"></polygon>
+<!-- Standing bent legs -->
+<path d="M11 26L7 34M17 26L21 34" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+<!-- Right arm holding magnifying glass -->
+<path d="M18 15L27 12" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="31" cy="10" fill="none" r="4" stroke="#141414" stroke-width="2"></circle>
+<!-- Bug inside magnifier -->
+<circle cx="31" cy="10" fill="#EA4335" r="1.5"></circle>
+<!-- Left arm bent -->
+<path d="M9 16L4 21" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+</g>
+<!-- Warli Tarpa / Musical horn celebration -->
+<g transform="translate(285, 12)">
+<path d="M5 22L20 18L26 12L30 14" fill="none" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="30" cy="14" fill="#FBBC05" r="3" stroke="#141414" stroke-width="1.5"></circle>
+</g>
+<!-- Warli Figure 3: Celebrating '0 Errors' with raised arms -->
+<g transform="translate(340, 8)">
+<!-- Head -->
+<circle cx="14" cy="8" fill="#141414" r="4.5"></circle>
+<!-- Warli double triangle torso -->
+<polygon fill="#141414" points="14,13 6,21 22,21"></polygon>
+<polygon fill="#141414" points="14,29 6,21 22,21"></polygon>
+<!-- Dancing legs -->
+<path d="M11 28L6 34M17 28L22 34" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+<!-- Raised celebration arms -->
+<path d="M9 16L3 9M19 16L25 9" stroke="#141414" stroke-linecap="round" stroke-width="2"></path>
+</g>
+<!-- Terminal screen showing '0 ERRORS' & Code Stamp -->
+<g transform="translate(380, 10)">
+<rect fill="#141414" height="24" rx="4" stroke="#141414" stroke-width="1.5" width="56" x="0" y="3"></rect>
+<text fill="#4FA35A" font-family="monospace" font-size="7.5" font-weight="bold" x="6" y="16">&gt; 0 ERRORS</text>
+<text fill="#EDB13E" font-family="monospace" font-size="6" font-weight="bold" x="6" y="23">BUILD PASS</text>
+</g>
+<!-- Warli Dancing Circle (Tarpa Dance chain) on Right -->
+<g transform="translate(460, 10)">
+<!-- Dancer A -->
+<circle cx="8" cy="6" fill="#141414" r="3.5"></circle>
+<polygon fill="#141414" points="8,10 3,16 13,16"></polygon>
+<polygon fill="#141414" points="8,22 3,16 13,16"></polygon>
+<path d="M6 21L3 28M10 21L13 28" stroke="#141414" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Hand linked to Dancer B -->
+<path d="M11 14L19 14" stroke="#141414" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Dancer B -->
+<circle cx="22" cy="6" fill="#141414" r="3.5"></circle>
+<polygon fill="#141414" points="22,10 17,16 27,16"></polygon>
+<polygon fill="#141414" points="22,22 17,16 27,16"></polygon>
+<path d="M20 21L17 28M24 21L27 28" stroke="#141414" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Hand linked to Dancer C -->
+<path d="M25 14L33 14" stroke="#141414" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Dancer C -->
+<circle cx="36" cy="6" fill="#141414" r="3.5"></circle>
+<polygon fill="#141414" points="36,10 31,16 41,16"></polygon>
+<polygon fill="#141414" points="36,22 31,16 41,16"></polygon>
+<path d="M34 21L31 28M38 21L41 28" stroke="#141414" stroke-linecap="round" stroke-width="1.5"></path>
+</g>
+<!-- Traditional Warli Moon motif on Right End -->
+<g transform="translate(540, 24)">
+<circle cx="0" cy="0" fill="none" r="6" stroke="#141414" stroke-width="2"></circle>
+<path d="M-2 -5Q2 0 -2 5" fill="none" stroke="#141414" stroke-width="1.5"></path>
+</g>
+</svg>
+</div>
+<!-- DevFest Year Stamp -->
+<div class="flex-shrink-0">
+<span class="font-mono font-bold text-xs bg-dark text-white px-2 py-1 rounded">DEV FEST '26</span>
+</div>
+</div>
+</div><div class="max-w-[1240px] mx-auto px-6 mb-4 flex items-center justify-center gap-2 select-none overflow-hidden opacity-75">
+<span class="font-mono text-xs tracking-[0.4em] font-black text-dark">
+        ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼ ● ▲ ▼ ▲ ▼
+      </span>
+</div>
+<div class="max-w-[1140px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+<!-- Left: GDG Nashik & DevFest attribution -->
+<div class="flex items-center gap-3">
+<div class="flex items-center">
+<svg class="w-8 h-6" fill="none" viewbox="0 0 48 36" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 6L4 18L16 30" stroke="#141414" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<path d="M16 6L4 18" stroke="#EA4335" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M4 18L16 30" stroke="#FBBC05" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M28 5L20 31" stroke="#141414" stroke-linecap="round" stroke-width="4"></path>
+<path d="M28 5L20 31" stroke="#4285F4" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M32 6L44 18L32 30" stroke="#141414" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<path d="M32 6L44 18" stroke="#34A853" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M44 18L32 30" stroke="#4285F4" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<div class="text-xs font-ui text-dark font-medium">
+    Built with <span class="text-gRed font-bold">❤️</span> by <strong class="font-bold text-dark">Google Developer Groups Nashik</strong> for <strong class="font-bold text-dark">DevFest Nashik 2026</strong> · Powered by <strong class="font-bold text-dark">Gemini</strong>
+</div>
+</div>
+<!-- Right: Links / Tags -->
+<div class="flex items-center gap-3 font-mono text-xs font-bold text-dark/80 flex-wrap justify-center">
+<span class="hover:text-dark hover:underline cursor-pointer">#DevFestNashik</span>
+<span class="hover:text-dark hover:underline cursor-pointer">#CodeRoaster</span>
+<span class="hover:text-dark hover:underline cursor-pointer">#DesiDebug</span>
+<div class="inline-flex items-center bg-[#FBBC05] brutal-border px-2 py-0.5 rounded text-[11px] text-dark font-extrabold gap-1.5 shadow-sm">
+<span>&lt;/&gt;</span>
+<span>DEVFEST '26 NASHIK</span>
+</div>
+<span class="bg-dark text-mustard brutal-border px-2 py-0.5 rounded text-[11px]">v2.6 STABLE</span>
+</div>
+</div>
+</footer>
+</body>
+</html>
